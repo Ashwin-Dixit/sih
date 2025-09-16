@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sankat Saathi</title>
+    <!-- Tailwind CSS for modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .cta-button {
+            background-image: linear-gradient(to right, #4CAF50 0%, #6A994E 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            transform: scale(1);
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .module-card {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        }
+        .vr-simulation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .vr-simulation-container.active {
+            display: flex;
+            opacity: 1;
+        }
+        .vr-simulation-content {
+            width: 80%;
+            height: 70%;
+            background: url('https://placehold.co/800x600/1e293b/d1d5db?text=Simulated+360+View') no-repeat center center / cover;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-[#f0f4f8] text-gray-900 antialiased p-4 sm:p-8 flex items-center justify-center min-h-screen">
+
+    <main id="main-content" class="w-full max-w-7xl mx-auto space-y-8 p-4 md:p-8 rounded-3xl">
+
+        <!-- Header and User Info -->
+        <header class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0"><!--md:space-y-0 p-6 card-->
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800">Sankat Saathi</h1>
+                <p class="text-md text-gray-500 mt-1">Disaster Preparedness for Schools and Colleges</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-right">
+                    <p class="font-bold text-lg text-gray-700" id="user-name">Hello, User!</p>
+                    <p class="text-sm text-gray-500">Your Credits: <span id="user-credits" class="font-semibold text-green-600">0</span></p>
+                </div>
+                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl font-bold text-gray-600">U</div>
+            </div>
+        </header>
+
+        <!-- Main Content Area with Modules -->
+        <div id="main-dashboard-sections" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Disaster Preparedness Module -->
+            <div id="module-earthquake" class="module-card card p-6 cursor-pointer">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-house-damage text-5xl text-gray-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Disaster Preparedness</h2>
+                <p class="text-gray-500 text-center text-sm">Learn life-saving protocols. Complete the quiz and upload your mock drill video to earn credits.</p>
+                <div class="mt-4 text-center">
+                    <button id="start-module-btn" class="cta-button text-sm">Start Module</button>
+                </div>
+            </div>
+            <!--my edit for game module-->
+            <div id="module-game" class="module-card card p-6 cursor-pointer">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-gamepad text-5xl text-gray-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Game section</h2>
+                <p class="text-gray-500 text-center text-sm">Play interactive 'Real life Situation' based game.</p><br>
+                <p class="text-gray-500 text-center text-sm">This section contains 'Real World situation' based games with storyline to keep you hooked(we swear Disney ending <i class="fa-regular fa-face-smile-beam"></i>)</p>
+                <div class="mt-4 text-center">
+                    <button id="start-game-btn" class="cta-button text-sm">Get Started</button>
+                </div>
+            </div>
+            <!--end-->
+
+            <!-- Helping Hand Section -->
+            <div id="helping-hand-section" class="card p-6 col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-people-pulling text-5xl text-gray-600"></i>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Helping Hand Community</h2>
+                <p class="text-gray-500 text-center mb-4 text-sm">Share how you would react in a crisis. Upload a video and get inspired!</p>
+                <div id="helping-hand-videos" class="space-y-4 max-h-60 overflow-y-auto">
+                    <!-- Placeholder video cards -->
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center text-xl text-gray-500"><i class="fas fa-video"></i></div>
+                        <div class="flex-grow">
+                            <p class="font-semibold text-gray-800">First Aid</p>
+                            <p class="text-sm text-gray-500">Rituraj & Ashwin</p>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-500">
+                            <button class="like-btn" data-likes="12"><i class="fas fa-heart text-red-500"></i> <span class="likes-count">12</span></button>
+                            <button class="follow-btn text-blue-500 text-sm font-semibold">Follow</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="upload-video-btn" class="cta-button text-sm">Upload Video</button>
+                </div>
+            </div>
+            <!--my edit for leader board-->
+            <div id="leaderboard-section" class="card p-6 col-span-1 md:col-span-2 lg:col-span-1">
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Leaderboard <i class="fa-solid fa-ranking-star"></i></h2>
+                <p class="text-gray-500 text-center mb-4 text-sm">Play games, Get higher!</p>
+                <p class="text-gray-500 text-center mb-4 text-sm">Current League : Emerald</p>
+                <div id="leaderboard-users" class="space-y-4 max-h-60 overflow-y-auto">
+                    <!-- Placeholder rankings card -->
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center text-xl text-gray-500"><i class="fa-solid fa-medal"></i></div>
+                        <div class="flex-grow">
+                            <p class="font-semibold text-gray-800">user 1</p>
+                            <p class="text-sm text-gray-500">user-id</p>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-500">
+                             <span >League Credits 12</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!--end-->
+
+
+            <!-- Admin Dashboard Mock -->
+            <div id="admin-dashboard" class="card p-6 col-span-1 md:col-span-2 lg:col-span-1">
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Admin Dashboard</h2>
+                <p class="text-gray-500 text-center mb-4 text-sm">A quick look at your institution's preparedness metrics.</p>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-blue-100 rounded-lg">
+                        <p class="text-4xl font-bold text-blue-600" id="total-users">254</p>
+                        <p class="text-sm text-blue-800 mt-1">Total Users</p>
+                    </div>
+                    <div class="p-4 bg-green-100 rounded-lg">
+                        <p class="text-4xl font-bold text-green-600" id="completion-rate">78%</p>
+                        <p class="text-sm text-green-800 mt-1">Average Module Completion</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-4 bg-yellow-100 rounded-lg text-center">
+                    <p class="text-2xl font-bold text-yellow-600" id="pending-drills">14</p>
+                    <p class="text-sm text-yellow-800 mt-1">Mock Drill Videos uploded</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz and Mock Drill Section (Initially hidden) -->
+        <section id="quiz-section" class="hidden card p-8 my-8 space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 text-center">Quiz: Earthquake Protocols</h2>
+            <div id="quiz-question" class="text-lg text-gray-700 font-semibold">
+                <!-- Question will be loaded here -->
+            </div>
+            <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Options will be loaded here -->
+            </div>
+            <div class="text-center mt-6">
+                <button id="submit-answer-btn" class="cta-button">Submit Answer</button>
+            </div>
+            <div class="text-center mt-6">
+                <button id="back-to-dashboard-btn" class="cta-button text-sm">Back to Dashboard</button>
+            </div>
+            <div id="quiz-feedback" class="text-center mt-4"></div>
+        </section>
+         <!-- my edited game section (Initially hidden) -->
+        <section id="game-section" class="hidden card p-8 my-8 space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 text-center">Storyline 1 (Level : 1)</h2>
+            <div id="story-section-1" class="text-lg text-gray-700 font-semibold">
+                <!-- section 1 will be loaded here -->
+                 <h4 class="text-3xl font-bold text-gray-800 text-center">Comming soon.....<i class="fa-solid fa-hourglass-start"></i> </h4>
+                 <p>(Qualify NEXUS NODE pleeeeeease.....!!)</p>
+            </div>
+            <div class="text-center mt-6">
+                <button id="back-to-dashboard-btn" class="cta-button text-sm">Back to Dashboard</button>
+            </div>
+            <!--<div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+            </div>
+            <div class="text-center mt-6">
+                <button id="submit-answer-btn" class="cta-button">Submit Answer</button>
+            </div>
+            <div id="quiz-feedback" class="text-center mt-4"></div>-->
+        </section>
+
+        <!-- Mock Drill and VR Section (Initially hidden) -->
+        <section id="mock-drill-section" class="hidden card p-8 my-8 space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Your Mock Drill</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="w-full md:w-1/2 p-4 bg-gray-50 rounded-xl text-center">
+                    <p class="text-xl font-semibold text-gray-800 mb-2">Upload your drill video!</p>
+                    <p class="text-gray-500 text-sm mb-4">Show your "Drop, Cover, Hold On" in action to earn 100 credits.</p>
+                    <button id="upload-mock-drill-btn" class="cta-button text-sm">Upload Video</button>
+                </div>
+                <div class="w-full md:w-1/2 p-4 bg-gray-50 rounded-xl text-center">
+                    <p class="text-xl font-semibold text-gray-800 mb-2">Simulated VR Experience</p>
+                    <p class="text-gray-500 text-sm mb-4">Experience a simulated 360-degree view of an earthquake scenario.</p>
+                    <button id="open-vr-btn" class="cta-button text-sm">Enter VR Mode</button>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button id="back-to-dashboard-btn" class="cta-button text-sm">Back to Dashboard</button>
+            </div>
+        </section>
+        
+        <!-- War Simulation Module (Initially hidden) -->
+        <section id="war-module-section" class="hidden card p-8 my-8 space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 text-center">War-like Situation Protocols</h2>
+            <div class="text-lg text-gray-700">
+                <p class="mb-4">As a border state, it's crucial to understand protocols for war-like situations. This module covers:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li>**"Lockdown" and "Shelter-in-Place" procedures:** Understanding the difference and when to use each.</li>
+                    <li>**Emergency blackout protocols:** How to secure your location during an air raid warning.</li>
+                    <li>**Communication and Alert Systems:** Identifying official channels for real-time information.</li>
+                </ul>
+            </div>
+            <div class="text-center mt-6">
+                <button id="start-war-module-btn" class="cta-button text-sm">Complete this module and earn credits</button>
+            </div>
+        </section>
+        <footer class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0"><!--md:space-y-0 p-6 card-->
+            <div class="text-center md:text-left">
+
+                <p class="text-md text-gray-500 mt-1">created with <i class="fa-solid fa-heart"></i> by NEXUS NODE.</p>
+                <p class="text-md text-gray-500 mt-1">Stay Safe, Stay Alert.</p>
+            </div>
+            
+        </footer>
+        
+    </main>
+
+    <!-- VR Simulation Container (Hidden) -->
+    <div id="vr-simulation" class="vr-simulation-container">
+        <div id="vr-content" class="vr-simulation-content"></div>
+        <button id="exit-vr-btn" class="mt-8 text-white text-lg font-semibold">&times; Exit VR</button>
+    </div>
+
+    <!-- Alert Modal (replaces browser's alert) -->
+    <div id="alert-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Action Complete!</h3>
+            <p id="alert-message" class="text-gray-600 mb-6">This is a message.</p>
+            <button id="alert-ok-btn" class="cta-button w-full">OK</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const state = {
+                currentView: 'dashboard',
+                credits: 0,
+                quizCompleted: false,
+                mockDrillUploaded: false,
+            };
+
+            const userCreditsElement = document.getElementById('user-credits');
+            const mainContent = document.getElementById('main-content');
+            const moduleEarthquake = document.getElementById('module-earthquake');
+            const quizSection = document.getElementById('quiz-section');
+            const mockDrillSection = document.getElementById('mock-drill-section');
+            const startModuleBtn = document.getElementById('start-module-btn');
+            const backToDashboardBtn = document.querySelectorAll("#back-to-dashboard-btn");
+            const uploadMockDrillBtn = document.getElementById('upload-mock-drill-btn');
+            const openVrBtn = document.getElementById('open-vr-btn');
+            const vrSimulation = document.getElementById('vr-simulation');
+            const exitVrBtn = document.getElementById('exit-vr-btn');
+            const vrContent = document.getElementById('vr-content');
+            const helpingHandSection = document.getElementById('helping-hand-section');
+            const uploadVideoBtn = document.getElementById('upload-video-btn');
+            const helpingHandVideos = document.getElementById('helping-hand-videos');
+            const alertModal = document.getElementById('alert-modal');
+            const alertMessage = document.getElementById('alert-message');
+            const alertOkBtn = document.getElementById('alert-ok-btn');
+            const mainDashboardSections = document.getElementById('main-dashboard-sections');
+            //my edited element for leaderboard
+            const leaderboardSection = document.getElementById('leaderboard-section');
+            const leaderboardUsers = document.getElementById('leaderboard-users');
+            //my edited element for game
+            const startGameBtn = document.getElementById('start-game-btn');
+
+            // --- UI/View Management ---
+            function showView(viewId) {
+                const sections = document.querySelectorAll('main section');
+                sections.forEach(section => section.classList.add('hidden'));
+                
+                // Hide the main dashboard sections when switching to a module
+                if (viewId !== 'dashboard') {
+                    mainDashboardSections.classList.add('hidden');
+                } else {
+                    mainDashboardSections.classList.remove('hidden');
+                }
+
+                document.getElementById(viewId).classList.remove('hidden');
+            }
+
+            // --- Custom Alert Function ---
+            function showAlert(message) {
+                alertMessage.textContent = message;
+                alertModal.classList.remove('hidden');
+            }
+
+            alertOkBtn.addEventListener('click', () => {
+                alertModal.classList.add('hidden');
+            });
+
+            // --- Event Listeners ---
+            startModuleBtn.addEventListener('click', () => {
+                if (!state.quizCompleted) {
+                    showView('quiz-section');
+                    loadQuiz();
+                } else {
+                    showAlert("You've already completed the quiz! Proceed to the Mock Drill section.");
+                    showView('mock-drill-section');
+                }
+            });
+            //my edited for game button
+            startGameBtn.addEventListener('click', ()=>{
+                showView('game-section');
+            });
+            //end
+
+            backToDashboardBtn.forEach(btn => {btn.addEventListener('click', () => {
+                showView('dashboard');
+            })});
+
+            // --- Quiz Logic ---
+            const quizData = {
+                question: 'If you are outside during an earthquake, what should you do to stay safe?',
+                options: [
+                    'Run into the nearest building for shelter.',
+                    'Move to an open area away from buildings, trees, and power lines.',
+                    
+                    
+                    'Select NODE NEXUS to qualify for SIH.'
+                ],
+                correctAnswer: 'Move to an open area away from buildings, trees, and power lines.'
+            };
+
+            const quizQuestionEl = document.getElementById('quiz-question');
+            const quizOptionsEl = document.getElementById('quiz-options');
+            const submitAnswerBtn = document.getElementById('submit-answer-btn');
+            const quizFeedbackEl = document.getElementById('quiz-feedback');
+            
+            function loadQuiz() {
+                quizQuestionEl.textContent = quizData.question;
+                quizOptionsEl.innerHTML = '';
+                quizData.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'bg-gray-100 text-gray-800 p-4 rounded-xl text-left hover:bg-green-100 transition-colors';
+                    button.addEventListener('click', () => {
+                        // Deselect all and select current
+                        quizOptionsEl.querySelectorAll('button').forEach(btn => btn.classList.remove('bg-green-300'));
+                        button.classList.add('bg-green-300');
+                    });
+                    quizOptionsEl.appendChild(button);
+                });
+            }
+
+            submitAnswerBtn.addEventListener('click', () => {
+                const selected = quizOptionsEl.querySelector('.bg-green-300');
+                if (selected) {
+                    if (selected.textContent === quizData.correctAnswer) {
+                        quizFeedbackEl.innerHTML = '<p class="text-green-600 font-bold text-xl">Correct! You earned 50 credits.</p>';
+                        state.credits += 50;
+                        userCreditsElement.textContent = state.credits;
+                        state.quizCompleted = true;
+                        
+                        setTimeout(() => {
+                            showView('mock-drill-section');
+                        }, 2000);
+
+                    } else {
+                        quizFeedbackEl.innerHTML = '<p class="text-red-600 font-bold text-xl">Incorrect. Please try again.</p>';
+                    }
+                } else {
+                    showAlert('Please select an answer before submitting.');
+                }
+            });
+
+            // --- Mock Drill & VR Logic ---
+            uploadMockDrillBtn.addEventListener('click', () => {
+                if (!state.mockDrillUploaded) {
+                    showAlert("Video uploaded! Our team will review your mock drill and award you 100 credits soon. Good job!");
+                    state.credits += 100; // Mock credit update
+                    userCreditsElement.textContent = state.credits;
+                    state.mockDrillUploaded = true;
+                } else {
+                    showAlert("You have already uploaded your mock drill video. We've received it!");
+                }
+            });
+
+            openVrBtn.addEventListener('click', () => {
+                vrSimulation.classList.add('active');
+                vrContent.style.background = 'url(https://placehold.co/1200x800/1e293b/d1d5db?text=Simulated+360+View) no-repeat center center / cover';
+                
+                // Add mouse drag functionality to simulate 360 view
+                let isDragging = false;
+                let startX;
+                let scrollLeft;
+
+                vrContent.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    vrContent.style.cursor = 'grabbing';
+                    startX = e.pageX - vrContent.offsetLeft;
+                    scrollLeft = vrContent.scrollLeft;
+                });
+                
+                vrContent.addEventListener('mouseleave', () => {
+                    isDragging = false;
+                    vrContent.style.cursor = 'grab';
+                });
+
+                vrContent.addEventListener('mouseup', () => {
+                    isDragging = false;
+                    vrContent.style.cursor = 'grab';
+                });
+                
+                vrContent.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX - vrContent.offsetLeft;
+                    const walk = (x - startX) * 2; // the speed of drag
+                    vrContent.scrollLeft = scrollLeft - walk;
+                });
+            });
+
+            exitVrBtn.addEventListener('click', () => {
+                vrSimulation.classList.remove('active');
+            });
+
+            // --- Helping Hand Section Logic ---
+            const helpingHandData = [
+                { title: 'Evacuating My Class', user: 'Nexus-node user 1', likes: 25, videoId: 'evac_alice' },
+                { title: 'Rescuing a Pet from Floodwater', user: 'Nexus-node user 2', likes: 34, videoId: 'rescue_bob' }
+            ];
+
+            function renderHelpingHandVideos() {
+                helpingHandVideos.innerHTML = '';
+                helpingHandData.forEach(video => {
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'bg-gray-50 p-4 rounded-xl flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4';
+                    videoCard.innerHTML = `
+                        <div class="w-20 h-20 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center text-3xl text-gray-500"><i class="fas fa-video"></i></div>
+                        <div class="flex-grow text-center md:text-left">
+                            <p class="font-semibold text-gray-800">${video.title}</p>
+                            <p class="text-sm text-gray-500">${video.user}</p>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-500 mt-2 md:mt-0">
+                            <button class="like-btn" data-video-id="${video.videoId}"><i class="fas fa-heart text-red-500"></i> <span class="likes-count">${video.likes}</span></button>
+                            <button class="follow-btn text-blue-500 text-sm font-semibold">Follow</button>
+                            <button class="share-btn text-green-500 text-sm font-semibold">Share</button>
+                        </div>
+                    `;
+                    helpingHandVideos.appendChild(videoCard);
+                });
+            }
+
+            uploadVideoBtn.addEventListener('click', () => {
+                showAlert('Your video is being uploaded and will be reviewed shortly. Thanks for sharing!');
+                const newVideo = {
+                    title: 'My Mock Drill Video',
+                    user: 'You',
+                    likes: 0,
+                    videoId: `user_vid_${Date.now()}`
+                };
+                helpingHandData.unshift(newVideo);
+                renderHelpingHandVideos();
+            });
+
+            helpingHandVideos.addEventListener('click', (e) => {
+                if (e.target.closest('.like-btn')) {
+                    const btn = e.target.closest('.like-btn');
+                    const countEl = btn.querySelector('.likes-count');
+                    let likes = parseInt(countEl.textContent);
+                    countEl.textContent = likes + 1;
+                    showAlert('You liked this video! Your support encourages others to share.');
+                } else if (e.target.closest('.follow-btn')) {
+                    const btn = e.target.closest('.follow-btn');
+                    if (btn.textContent === 'Follow') {
+                        btn.textContent = 'Following';
+                        showAlert('You are now following this user!');
+                    } else {
+                        btn.textContent = 'Follow';
+                        showAlert('You unfollowed this user.');
+                    }
+                } else if (e.target.closest('.share-btn')) {
+                    showAlert('Video shared!');
+                }
+            });
+            //my edit for leaderboard
+            const leaderboardData = [
+                { userName: 'Rituraj', userId: 'rituraj-1', leagueCredits: 25 },
+                { userName: 'Ashwin Dixit', userId: 'ashwin-5', leagueCredits: 34 },
+                { userName: 'achintya', userId: 'achi-3', leagueCredits: 25 },
+                { userName: 'user 4', userId: 'user-4', leagueCredits: 25 },
+                { userName: 'user 5', userId: 'user-5', leagueCredits: 25 },
+                { userName: 'user 6', userId: 'user-6', leagueCredits: 25 },
+            ];
+
+            function renderLeaderboardUsers() {
+                leaderboardUsers.innerHTML = '';
+                leaderboardData.forEach(user => {
+                    const userCard = document.createElement('div');
+                    userCard.className = 'space-y-4 max-h-60 overflow-y-auto';
+                    userCard.innerHTML = `
+                    <div class="bg-gray-50 p-4 rounded-lg flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-md flex-shrink-0 flex items-center justify-center text-xl text-gray-500"><i class="fa-solid fa-medal"></i></div>
+                        <div class="flex-grow">
+                            <p class="font-semibold text-gray-800">${user.userName}</p>
+                            <p class="text-sm text-gray-500">${user.userId}</p>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-500">
+                             <span >League Credits ${user.leagueCredits}</span>
+                            
+                        </div>
+                    </div>
+                    `;
+                    leaderboardUsers.appendChild(userCard);
+                });
+            }
+            renderHelpingHandVideos();
+            renderLeaderboardUsers();
+            showView('dashboard');
+        });
+        
+
+
+    </script>
+
+</body>
+</html>
