@@ -80,13 +80,40 @@
     </style>
 </head>
 
-<body class="bg-[#f0f4f8] text-gray-900 antialiased p-4 sm:p-8 flex items-center justify-center min-h-screen">
+<body class="bg-[#f0f4f8] text-gray-900 antialiased    min-h-screen"> <!--flex items-center justify-center p-4 sm:p-8-->
+    <header style="background-color: #CDEDF6;"><!--md:space-y-0 p-6 card--> <!---->
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 p-2">
+                <div class="text-center md:text-left"> <!---->
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800">Sankat Saathi</h1>
+                    <p class="text-md text-gray-500 mt-1">Disaster Preparedness for Schools and Colleges</p>
+                </div>
+                <div class="flex items-center space-x-4"> <!---->
+                    <div class="text-right"> <!---->
+                        <p class="font-bold text-lg text-gray-700" id="user-name">Hello, User!</p>
+                        <p class="text-sm text-gray-500">Your Credits: <span id="user-credits" class="font-semibold text-green-600">0</span></p>
+                    </div>
+                    <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl font-bold text-gray-600">U</div>
+                </div>
+            </div>
+            <div id="navigation-bar">
+                <ul class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 p-4 font-extrabold" style="background-color:#5EB1BF;">
+                    <li>Home <i class="fa-solid fa-house"></i></li>
+                    <li>News <i class="fa-solid fa-newspaper"></i></li>
+                    <li>Help <i class="fa-solid fa-hand-holding-hand"></i></li>
+                    <li>Contact Directories <i class="fa-solid fa-address-book"></i></li>
+                    <li>Donations <i class="fa-solid fa-hand-holding-dollar"></i></li>
+                    <li>Contact Us <i class="fa-solid fa-at"></i></li>
+                    <li>Log Out <i class="fa-solid fa-right-from-bracket"></i></li>
+                </ul>
+            </div>
+            
+    </header>
 
     <main id="main-content" class="w-full max-w-7xl mx-auto space-y-8 p-4 md:p-8 rounded-3xl">
-
+         <!--******************************PREVIOUS HEADER*************************************************-->
         <!-- Header and User Info -->
-        <header class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0"><!--md:space-y-0 p-6 card-->
-            <div class="text-center md:text-left">
+        <!--<header class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0" style="background-color: aqua;">
+            <div class="text-center md:text-left"> 
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800">Sankat Saathi</h1>
                 <p class="text-md text-gray-500 mt-1">Disaster Preparedness for Schools and Colleges</p>
             </div>
@@ -97,7 +124,8 @@
                 </div>
                 <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl font-bold text-gray-600">U</div>
             </div>
-        </header>
+            
+        </header>-->
 
         <!-- Main Content Area with Modules -->
         <div id="main-dashboard-sections" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
